@@ -378,8 +378,19 @@ function reverseWords(str) {
  *   invertCase('JavaScript is Fun') => 'jAVAsCRIPT IS fUN'
  *   invertCase('12345') => '12345'
  */
-function invertCase(/* str */) {
-  throw new Error('Not implemented');
+function invertCase(str) {
+  return str
+    .split('')
+    .map((char) => {
+      if (char >= 'a' && char <= 'z') {
+        return char.toUpperCase();
+      }
+      if (char >= 'A' && char <= 'Z') {
+        return char.toLowerCase();
+      }
+      return char;
+    })
+    .join('');
 }
 
 /**
@@ -409,8 +420,10 @@ function getStringFromTemplate(firstName, lastName) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  const regex = /^Hello, (.+)!$/;
+  const match = value.match(regex);
+  return match ? match[1] : '';
 }
 
 /**
@@ -463,8 +476,11 @@ function extractEmails(str) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  return str.replace(/[a-zA-Z]/g, (char) => {
+    const base = char <= 'Z' ? 65 : 97;
+    return String.fromCharCode(((char.charCodeAt(0) - base + 13) % 26) + base);
+  });
 }
 
 /**
@@ -491,8 +507,28 @@ function encodeToRot13(/* str */) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  const cardsLVLS = [
+    'A',
+    '2',
+    '3',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10',
+    'J',
+    'Q',
+    'K',
+  ];
+  const cardsSuits = ['♣', '♦', '♥', '♠'];
+  const cardsLVL = value.slice(0, -1);
+  const cardsSuit = value.slice(-1);
+  const cardLvlIndex = cardsLVLS.indexOf(cardsLVL);
+  const cardSuitIndex = cardsSuits.indexOf(cardsSuit);
+  return cardSuitIndex * cardsLVLS.length + cardLvlIndex;
 }
 
 module.exports = {
